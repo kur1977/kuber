@@ -1,0 +1,30 @@
+isAdmin: true
+name: Vasya
+age: 20
+position: Frontend
+skills:
+  - name: HTML
+    level: 5
+    description: |
+      dfdg
+      fgdfg
+      dfhfh
+  - name: CSS
+    level: 4
+    description: |
+      dfdg
+      fgdfg
+      dfhfh
+place:
+  country: Russia
+  city: Moscow
+  street: Lenina
+  house: 12
+  flat: 34
+pets:
+  - name: Dog
+    type: terier
+    meow: no
+  - name: Cat
+    type: cool
+    meow: yes
