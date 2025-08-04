@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rmq
-          image: rabbitmq:4.1.2
+          image: rabbitmq:4.1.2-management
           ports:
             - containerPort: 15672
           env:
