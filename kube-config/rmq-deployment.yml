@@ -19,9 +19,15 @@ spec:
             - containerPort: 15672
           env:
             - name: SEED_USERNAME
-              value: user
+              valueFrom:
+                secretKeyRef:
+                  name: rmq-secret
+                  key: SEED_USERNAME
             - name: SEED_USER_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: rmq-secret
+                  key: SEED_USER_PASSWORD
           resources:
             limits:
               memory: "500Mi"
@@ -30,7 +36,12 @@ spec:
             - name: rmq-data
               mountPath: /var/lib/rabbitmq
               subPath: rmq
+            - name: rmq-uploads
+              mountPath: /opt/app/uploads
       volumes:
         - name: rmq-data
           persistentVolumeClaim:
             claimName: rmq-pvc
+        - name: rmq-uploads
+          persistentVolumeClaim:
+            claimName: rmq-uploads-pvc
