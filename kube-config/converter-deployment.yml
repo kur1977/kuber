@@ -38,11 +38,11 @@ spec:
                 secretKeyRef:
                   name: api-secret
                   key: AMQP_PASSWORD
-            - name: AMQP_QEUE
+            - name: AMQP_QUEUE
               valueFrom:
                 secretKeyRef:
                   name: api-secret
-                  key: AMQP_QEUE
+                  key: AMQP_QUEUE
             - name: AMQP_HOSTNAME
               valueFrom:
                 secretKeyRef:
