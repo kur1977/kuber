@@ -19,5 +19,11 @@ spec:
             - containerPort: 80
           resources:
             limits:
-              memory: "128Mi"
-              cpu: "100m"
+              memory: "512Mi"
+              cpu: "300m"
+          env:
+            - name: VITE_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: VITE_DOMAIN
