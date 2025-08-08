@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: conv-api-deployment
+  name: conv-converter-deployment
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
-      components: api
+      components: converter
   template:
     metadata:
       labels:
-        components: api
+        components: converter
     spec:
       containers:
-        - name: conv-api
-          image: antonlarichev/conv-api:1.0
+        - name: conv-converter
+          image: antonlarichev/conv-service:1.0
           ports:
-            - containerPort: 3000
+            - containerPort: 3100
           env:
             - name: DATABASE_URL
               valueFrom:
@@ -38,6 +38,11 @@ spec:
                 secretKeyRef:
                   name: api-secret
                   key: AMQP_PASSWORD
+            - name: AMQP_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: api-secret
+                  key: AMQP_QUEUE
             - name: AMQP_HOSTNAME
               valueFrom:
                 secretKeyRef:
@@ -46,4 +51,4 @@ spec:
           resources:
             limits:
               memory: "128Mi"
-              cpu: "100m"
+              cpu: "500m"
