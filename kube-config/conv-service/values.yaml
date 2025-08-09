@@ -1,0 +1,10 @@
+app:
+  name: conv-app
+  VITE_DOMAIN: kubernetes.local
+  replicas: 1
+  components: frontend
+  image: antonlarichev/conv-app:1.2
+  port: 80
+  limits:
+    memory: "512Mi"
+    cpu: "300m"
