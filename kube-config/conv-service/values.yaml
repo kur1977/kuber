@@ -52,7 +52,7 @@ postgres:
   limits:
     memory: "500Mi"
     cpu: "300m"
-    storage: 1Gi
+  storage: 1Gi
 
 api:
   name: conv-api
