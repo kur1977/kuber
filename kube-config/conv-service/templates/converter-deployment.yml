@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.converter.name}}-deployment
+spec:
+  replicas: {{.Values.converter.replicas}}
+  selector:
+    matchLabels:
+      components: {{.Values.converter.components}}
+  template:
+    metadata:
+      labels:
+        components: {{.Values.converter.components}}
+    spec:
+      containers:
+        - name: {{.Values.converter.name}}
+          image: {{.Values.converter.image}}
+          ports:
+            - containerPort: {{.Values.converter.port}}
+          env:
+            {{- range $key, $value := .Values.api.envs }}
+            {{- $data := dict "name" $.Values.api.components "env" $key}}
+            {{- include "env.template" $data | nindent 12 }}
+            {{- end }}
+          resources:
+            limits: {{.Values.converter.limits | toYaml | nindent 14}}
