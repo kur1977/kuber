@@ -24,6 +24,13 @@ rmq:
 
 converter:
   name: conv-converter
+  envs:
+    DATABASE_URL: 'postgresql://user:password@conv-postgres:5432/demo'
+    AMQP_EXCHANGE: 'exchange'
+    AMQP_USER: 'user'
+    AMQP_PASSWORD: 'password'
+    AMQP_HOSTNAME: 'rmq-clasterip'
+    AMQP_QUEUE: 'queue'
   replicas: 5
   components: converter
   image: antonlarichev/conv-service:1.0

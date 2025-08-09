@@ -18,7 +18,7 @@ spec:
           ports:
             - containerPort: {{.Values.converter.port}}
           env:
-            {{- range $key, $value := .Values.api.envs }}
+            {{- range $key, $value := .Values.converter.envs }}
             {{- $data := dict "name" $.Values.api.components "env" $key}}
             {{- include "env.template" $data | nindent 12 }}
             {{- end }}
