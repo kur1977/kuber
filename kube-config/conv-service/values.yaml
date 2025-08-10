@@ -8,3 +8,65 @@ app:
   limits:
     memory: "512Mi"
     cpu: "300m"
+
+rmq:
+  name: rmq
+  envs:
+    SEED_USERNAME: 'user'
+    SEED_USER_PASSWORD: 'password'
+  replicas: 1
+  components: rmq
+  image: rabbitmq:4.1.2-management
+  port: 15672
+  storage:
+    pvc: 1Gi
+    uploadsPvc: 1Gi
+
+converter:
+  name: conv-converter
+  envs:
+    DATABASE_URL: 'postgresql://user:password@conv-postgres:5432/demo'
+    AMQP_EXCHANGE: 'exchange'
+    AMQP_USER: 'user'
+    AMQP_PASSWORD: 'password'
+    AMQP_HOSTNAME: 'rmq-clasterip'
+    AMQP_QUEUE: 'queue'
+  replicas: 5
+  components: converter
+  image: antonlarichev/conv-service:1.0
+  port: 3100
+  limits:
+    memory: "512Mi"
+    cpu: "300m"
+
+postgres:
+  name: conv-postgres
+  envs:
+     POSTGRES_USER: 'user'
+     POSTGRES_PASSWORD: 'password'
+     POSTGRES_DB: 'demo'
+  replicas: 1
+  components: postgres
+  image: postgres:16.9
+  port: 5432
+  limits:
+    memory: "500Mi"
+    cpu: "300m"
+  storage: 1Gi
+
+api:
+  name: conv-api
+  envs:
+     DATABASE_URL: 'postgresql://user:password@conv-postgres:5432/demo'
+     AMQP_EXCHANGE: 'exchange'
+     AMQP_USER: 'user'
+     AMQP_PASSWORD: 'password'
+     AMQP_HOSTNAME: 'rmq-clasterip'
+     AMQP_QUEUE: 'queue'
+  replicas: 1
+  components: api
+  image: antonlarichev/conv-api:1.0
+  port: 3000
+  limits:
+    memory: "512Mi"
+    cpu: "200m"
